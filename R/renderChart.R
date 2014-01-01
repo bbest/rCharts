@@ -27,7 +27,12 @@ renderMap = function(expr, env = parent.frame(), quoted = FALSE, html_sub = NULL
   function() {
     rChart_ <- func()
     map_style <- sprintf("<style>.leaflet {width: %s; height: %s} </style>",
-      rChart_$params$width, rChart_$params$height)
+      ifelse(is.numeric(rChart_$params$width), 
+             sprintf('%spx', rChart_$params$width), 
+             rChart_$params$width), 
+      ifelse(is.numeric(rChart_$params$width), 
+             sprintf('%spx', rChart_$params$width),              
+             rChart_$params$height))
     map_div = sprintf('<div id="%s" class="rChart leaflet"></div>', rChart_$params$dom)    
     rChart_html = rChart_$html()
     if (length(html_sub) > 0){
